@@ -5,12 +5,13 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Produk as ModelProduk;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Produk as ImporProduk;
 
 class Produk extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
     public $pilihanMenu = 'lihat';
     public $nama;
     public $kode;
@@ -18,12 +19,31 @@ class Produk extends Component
     public $stok;
     public $produkTerpilih;
     public $fileExcel;
+    public $search = '';
+
+    protected $paginationTheme = 'bootstrap'; // buat bikin pagination sama bootstrap
+
 
     public function mount()
     {
        if(auth()->User()->peran !='admin'){
         abort(403);
        }
+    }
+
+
+    public function updatingSearch()
+{
+    $this->resetPage();
+}
+
+    public function cariSekarang(){
+        $this->resetPage();
+    }
+
+    public function produk() {
+        session()->flash('produk_visited', true);
+        return view('produk');
     }
 
     public function imporExcel(){
@@ -64,7 +84,7 @@ class Produk extends Component
         $simpan->harga = $this->harga;
         $simpan->save();
 
-        $this->reset();
+        $this->reset(['nama', 'kode', 'stok', 'harga', 'produkTerpilih']);
         $this->pilihanMenu = 'lihat';
     }
 
@@ -105,10 +125,11 @@ class Produk extends Component
         $simpan->nama = $this->nama;
         $simpan->kode = $this->kode;
         $simpan->stok = $this->stok;
-        $simpan->harga = $this->harga;
+        $simpan->harga = str_replace('.', '', $this->harga);
+        $simpan->user_id = auth()->id(); // atau auth()->user()->id
         $simpan->save();
 
-        $this->reset(['nama', 'kode', 'stok', 'harga']);
+        $this->reset(['nama', 'kode', 'stok', 'harga', 'produkTerpilih']);
         $this->pilihanMenu = 'lihat';
 
     }
@@ -116,10 +137,26 @@ class Produk extends Component
         $this->pilihanMenu = $menu;
     }
 
-    public function render()
-    {
-        return view('livewire.produk')->with([
-            'semuaProduk' => ModelProduk::all()
-        ]);
+    // public function render()
+    // {
+    //     return view('livewire.produk')->with([
+    //         'semuaProduk' => ModelProduk::where('user_id', auth()->id())->get()
+    //     ]);
+    // }
+
+    public function render(){
+        $semuaProduk = ModelProduk::where('user_id',  auth()->id())
+        ->where(function($query){
+            $query->where('nama', 'like', '%'. $this->search. '%')
+                ->orwhere('kode', 'like', '%'. $this->search. '%');
+        })
+        ->paginate(10); // berapa halaman yg ada di table
+
+    // return view('livewire.produk')->with([
+    //     'semuaProduk' => $semuaProduk
+    // ]);
+
+    return view('livewire.produk', compact('semuaProduk'));
     }
+
 }

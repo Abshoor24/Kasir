@@ -99,6 +99,7 @@ class User extends Component
         $simpan->email = $this->email;
         $simpan->password = bcrypt($this->password);
         $simpan->peran = $this->peran;
+        $simpan->created_by = auth()->user()->id;
         $simpan->save();
 
         $this->reset(['nama', 'email', 'password', 'peran']);
@@ -108,10 +109,24 @@ class User extends Component
     public function pilihMenu($menu){
         $this->pilihanMenu = $menu;
     }
+    // public function render()
+    // {
+    //     return view('livewire.user')->with([
+    //         'semuaPengguna' => ModelUser::all()
+    //     ]);
+    // }
+
     public function render()
-    {
-        return view('livewire.user')->with([
-            'semuaPengguna' => ModelUser::all()
-        ]);
-    }
+{
+    $currentUserId = auth()->user()->id;
+    
+    // Ambil user yang sedang login dan user yang dibuat olehnya
+    $semuaPengguna = ModelUser::where('id', $currentUserId)
+        ->orWhere('created_by', $currentUserId)
+        ->get();
+
+    return view('livewire.user')->with([
+        'semuaPengguna' => $semuaPengguna
+    ]);
+}
 }

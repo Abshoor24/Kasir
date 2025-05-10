@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('harga')->unsigned();
             $table->string('stok')->default(1)->unsigned();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

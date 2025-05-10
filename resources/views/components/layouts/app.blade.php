@@ -19,6 +19,16 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function disabledButton(this){
+            button.classList.add('disabled');
+            button.setAtribute('disabled', 'true');
+            button.removeAtribute('onclick');
+        }
+    </script>
+
+
 </head>
 <body>
     <div id="app">
@@ -89,11 +99,25 @@
                         </a>
                         @endif
                         @if (Auth::user()->peran=='admin')
-                        <a href="{{ route('produk') }}" wire:navigate class="btn {{ request()->routeIs('produk') ? 'btn-primary' : 'btn-outline-primary'}}">
+                        <a href="{{ route('produk') }}"
+                            id="produkBtn"
+                            target="_blank"
+                            onclick="disabledButton(this)"
+                           class="btn {{ request()->routeIs('produk') ? 'btn-primary disabled' : 'btn-outline-primary'}}"
+                           @if(session('produk_visited')) disabled @endif
+                           @if(request()->routeIs('produk')) disabled @endif>
+
                             Produk
                         </a>
                         @endif
-                        <a href="{{ route('transaksi') }}" wire:navigate class="btn {{ request()->routeIs('transaksi') ? 'btn-primary' : 'btn-outline-primary'}}">
+                        <a href="{{ route('transaksi') }}"  
+                            id="transaksiBtn"
+                            target="_blank"
+                            onclick="disabledButton(this)"
+                        
+                           class="btn {{ request()->routeIs('transaksi') ? 'btn-primary disabled' : 'btn-outline-primary'}}"
+                            @if(session('produk_visited')) disabled @endif
+                           @if(request()->routeIs('transaksi')) disabled @endif>
                             Transaksi
                         </a>
                         <a href="{{ route('laporan') }}" wire:navigate class="btn {{ request()->routeIs('laporan') ? 'btn-primary' : 'btn-outline-primary'}}">

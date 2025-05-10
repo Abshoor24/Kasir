@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use App\Models\Produk as ModelProduk;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Illuminate\Support\Facades\Auth;
 
 class Produk implements ToCollection, WithStartRow
 {
@@ -13,9 +14,7 @@ class Produk implements ToCollection, WithStartRow
     {
         return 2;
     }
-    /**
-    * @param Collection $collection
-    */
+
     public function collection(Collection $collection)
     {
         foreach ($collection as $col){
@@ -26,8 +25,8 @@ class Produk implements ToCollection, WithStartRow
                 $simpan->nama = $col[2];
                 $simpan->harga = $col[3];
                 $simpan->stok = 10;
+                $simpan->user_id = Auth::id(); // ✅ Tambahkan ini
                 $simpan->save();
-
             }
         }
     }

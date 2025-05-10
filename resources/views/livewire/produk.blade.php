@@ -28,7 +28,11 @@
                     <div class="card-header">
                         All Produk
                     </div>
+
                     <div class="card-body">
+                        <input type="text" wire:model.defer="search" wire:keydown.enter="cariSekarang" 
+                        class="form-control" placeholder="Cari nama atau kode produk">
+
                         <table class="table table-bordered">
                             <thead>
                                 <th>No</th>
@@ -47,11 +51,11 @@
                                         <td>{{ $produk->harga }}</td>
                                         <td>{{ $produk->stok }}</td>
                                         <td>
-                                            <button wire:click="pilihEdit ({{ $produk->id }})" 
+                                            <button wire:click="pilihEdit({{ $produk->id }})" 
                                             class="btn {{ $pilihanMenu=='edit' ? 'btn-primary' : 'btn-outline-primary' }}">
                                                 Edit Produk
                                             </button>
-                                            <button wire:click="pilihHapus ({{ $produk->id }})" 
+                                            <button wire:click="pilihHapus({{ $produk->id }})" 
                                             class="btn {{ $pilihanMenu=='hapus' ? 'btn-primary' : 'btn-outline-primary' }}">
                                                 Delete Produk
                                             </button>
@@ -60,6 +64,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $semuaProduk->links() }}
                     </div>
                 </div>
                 @elseif ($pilihanMenu=='tambah')

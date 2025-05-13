@@ -9,7 +9,7 @@ use App\Livewire\Transaksi;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('http://localhost:5173');
 });
 
 Auth::routes();

@@ -1,0 +1,11 @@
+# Laravel
+/vendor
+.env
+/public/storage
+/storage/*.key
+.phpunit.result.cache
+
+# Node.js (React)
+/frontend/node_modules
+/frontend/dist
+/frontend/build

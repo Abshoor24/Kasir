@@ -47,7 +47,7 @@ useEffect(() => {
 <img 
         src={Store} 
         alt="Deskripsi Gambar" 
-       className='w-full max-w-md shadow-[0_25px_20px_-20px_rgba(0,0,0,0.3)]'
+       className='w-full max-w-md shadow-[0_20px_20px_-20px_rgba(0,0,0,0.3)]'
       />
 </div>
 

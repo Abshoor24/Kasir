@@ -1,27 +1,28 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import api from './lib/axios';
 
-export default function Dashboard() {
-  const [info, setInfo] = useState(null)
+function Dashboard() {
+    const [data, setData] = useState(null);
 
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/info-dashboard')
-      .then(res => setInfo(res.data))
-      .catch(err => console.error("Error Fetch : ", err))
-  }, [])
+    useEffect(() => {
+        // CSRF token penting untuk auth berbasis cookie/session
+        api.get('/sanctum/csrf-cookie').then(() => {
+            api.get('/api/info-dashboard')
+                .then(res => setData(res.data))
+                .catch(err => console.error(err));
+        });
+    }, []);
 
-  return (
-    <div className='p-6'>
-      <h1 className='text-2xl font-bold mb-4'>Dashboard</h1>
-      {info ? (
-        <div className='space-y-2'>
-          <p>Total Produk : {info.total_produk}</p>
-          <p>Total Transaksi : {info.total_transaksi}</p>
-          <p>Total User : {info.total_user}</p>
+    if (!data) return <p>Loading...</p>;
+
+    return (
+        <div>
+            <h1>Halo, {data.user}</h1>
+            <p>Total Produk: {data.total_produk}</p>
+            <p>Total Transaksi: {data.total_transaksi}</p>
+            <p>Total User: {data.total_user}</p>
         </div>
-      ) : (
-        <p>Loading . . .</p>
-      )}
-    </div>
-  )
+    );
 }
+
+export default Dashboard;

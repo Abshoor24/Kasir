@@ -8,7 +8,7 @@ export default defineConfig({
     manifest: true,
     outDir: 'public/build',
     rollupOptions: {
-      input: '/resources/js/app.jsx', // ganti dengan entry point React-mu
+      input: '/resources/js/app.jsx', 
     },
   },
   resolve: {

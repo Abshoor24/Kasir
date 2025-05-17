@@ -36,6 +36,7 @@ class Transaksi extends Component
     public function transaksiSelesai(){
         $this->transaksiAktif->total = $this->totalSemuaBelanja;
         $this->transaksiAktif->status = 'selesai';
+        $this->transaksiAktif->created_at = now();
         $this->transaksiAktif->save();
         $this->reset();
     }

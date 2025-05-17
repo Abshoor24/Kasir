@@ -8,7 +8,6 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Produk as ImporProduk;
-
 class Produk extends Component
 {
     use WithFileUploads, WithPagination;
@@ -24,12 +23,12 @@ class Produk extends Component
     protected $paginationTheme = 'bootstrap'; // buat bikin pagination sama bootstrap
 
 
-    public function mount()
-    {
-       if(auth()->User()->peran !='admin'){
-        abort(403);
-       }
-    }
+   public function mount()
+{
+   if(!in_array(auth()->user()->peran, ['admin', 'user'])) {
+       abort(403);
+   }
+}
 
 
     public function updatingSearch()
@@ -46,11 +45,14 @@ class Produk extends Component
         return view('produk');
     }
 
-    public function imporExcel(){
-        Excel::import(new ImporProduk, $this->fileExcel);
-        $this->reset();
+    public function imporExcel()
+{
+    if(auth()->user()->peran != 'admin') {
+        abort(403);
     }
-
+    Excel::import(new ImporProduk, $this->fileExcel);
+    $this->reset();
+}
 
     public function pilihEdit($id)
     {
@@ -97,10 +99,14 @@ class Produk extends Component
 
 
 
-    public function hapus(){
-        $this->produkTerpilih->delete();
-        $this->reset();
+   public function hapus()
+{
+    if(auth()->user()->peran != 'admin') {
+        abort(403);
     }
+    $this->produkTerpilih->delete();
+    $this->reset();
+}
 
     public function batal() {
         $this->reset();
@@ -121,6 +127,11 @@ class Produk extends Component
             'harga.required' => 'harga harus diisi',
             'stok.required' => 'stok harus diisi',
         ]);
+
+        if(auth()->user()->peran != 'admin') {
+        abort(403);
+    }
+
         $simpan = new ModelProduk();
         $simpan->nama = $this->nama;
         $simpan->kode = $this->kode;
@@ -144,19 +155,24 @@ class Produk extends Component
     //     ]);
     // }
 
-    public function render(){
-        $semuaProduk = ModelProduk::where('user_id',  auth()->id())
-        ->where(function($query){
+    public function render()
+{
+    $query = ModelProduk::query();
+    
+    // Jika user biasa (kasir), tampilkan semua produk yang tersedia
+    // Atau jika ingin membatasi hanya produk milik user tertentu:
+    // if(auth()->user()->peran == 'user') {
+    //     $query->where('user_id', auth()->id());
+    // }
+    
+    $semuaProduk = $query->where(function($query){
             $query->where('nama', 'like', '%'. $this->search. '%')
-                ->orwhere('kode', 'like', '%'. $this->search. '%');
+                ->orWhere('kode', 'like', '%'. $this->search. '%');
         })
-        ->paginate(10); // berapa halaman yg ada di table
-
-    // return view('livewire.produk')->with([
-    //     'semuaProduk' => $semuaProduk
-    // ]);
+        ->paginate(10);
 
     return view('livewire.produk', compact('semuaProduk'));
-    }
+}
+
 
 }

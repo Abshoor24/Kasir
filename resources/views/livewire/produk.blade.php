@@ -1,5 +1,4 @@
 <div>
-    
     <div class="container">
         <div class="row my-2">
             <div class="col-12">
@@ -7,6 +6,8 @@
                 class="btn {{ $pilihanMenu=='lihat' ? 'btn-primary' : 'btn-outline-primary' }}">
                     All Produk
                 </button>
+                
+                @if(auth()->user()->peran == 'admin')
                 <button wire:click="pilihMenu('tambah')" 
                 class="btn {{ $pilihanMenu=='tambah' ? 'btn-primary' : 'btn-outline-primary' }}">
                     Add Produk
@@ -15,6 +16,8 @@
                 class="btn {{ $pilihanMenu=='excel' ? 'btn-primary' : 'btn-outline-primary' }}">
                     Impor Produk
                 </button>
+                @endif
+                
                 <button wire:loading class="btn btn-info">
                     Loading . . .
                 </button>
@@ -40,7 +43,9 @@
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
-                                <th>Data</th>
+                                @if(auth()->user()->peran == 'admin')
+                                <th>Action</th>
+                                @endif
                             </thead>
                             <tbody>
                                 @foreach ($semuaProduk as $produk )
@@ -48,18 +53,20 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $produk->kode }}</td>
                                         <td>{{ $produk->nama }}</td>
-                                        <td>{{ $produk->harga }}</td>
+                                        <td>{{ number_format($produk->harga, 0, ',', '.') }}</td>
                                         <td>{{ $produk->stok }}</td>
+                                        @if(auth()->user()->peran == 'admin')
                                         <td>
                                             <button wire:click="pilihEdit({{ $produk->id }})" 
-                                            class="btn {{ $pilihanMenu=='edit' ? 'btn-primary' : 'btn-outline-primary' }}">
-                                                Edit Produk
+                                            class="btn btn-sm {{ $pilihanMenu=='edit' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                                Edit
                                             </button>
                                             <button wire:click="pilihHapus({{ $produk->id }})" 
-                                            class="btn {{ $pilihanMenu=='hapus' ? 'btn-primary' : 'btn-outline-primary' }}">
-                                                Delete Produk
+                                            class="btn btn-sm {{ $pilihanMenu=='hapus' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                                Delete
                                             </button>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -67,7 +74,7 @@
                         {{ $semuaProduk->links() }}
                     </div>
                 </div>
-                @elseif ($pilihanMenu=='tambah')
+                @elseif ($pilihanMenu=='tambah' && auth()->user()->peran == 'admin')
                 <div class="card border-primary">
                     <div class="card-header">
                         Add produk
@@ -101,11 +108,10 @@
                             <button type="submit" class="btn btn-primary mt-2">
                                 Save
                             </button>
-
                         </form>
                     </div>
                 </div>
-                @elseif ($pilihanMenu=='edit')
+                @elseif ($pilihanMenu=='edit' && auth()->user()->peran == 'admin')
                 <div class="card border-primary">
                     <div class="card-header">
                         Edit produk
@@ -139,11 +145,10 @@
                             <button type="submit" class="btn btn-primary mt-2">
                                 Save
                             </button>
-
                         </form>
                     </div>
                 </div>
-                @elseif ($pilihanMenu=='hapus')
+                @elseif ($pilihanMenu=='hapus' && auth()->user()->peran == 'admin')
                 <div class="card border-danger">
                     <div class="card-header bg-danger text-white">
                         Delete produk
@@ -160,7 +165,7 @@
                         </button>
                     </div>
                 </div>
-                @elseif ($pilihanMenu=='excel')
+                @elseif ($pilihanMenu=='excel' && auth()->user()->peran == 'admin')
                 <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         Impor produk
@@ -174,9 +179,12 @@
                         </button>
                     </div>
                 </div>
+                @else
+                <div class="alert alert-danger">
+                    Anda tidak memiliki akses untuk fitur ini
+                </div>
                 @endif
             </div>
         </div>
     </div>
-
 </div>

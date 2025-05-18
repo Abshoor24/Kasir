@@ -63,15 +63,17 @@
 
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-[#d2e7f6]">
     <div id="app">
         <!-- Navbar -->
-        <nav class="bg-white shadow-sm">
+        <nav class="bg-[#d2e7f6]">
             <div class="max-w-7xl mx-auto px-10 sm:px-10 lg:px-8">
                 <div class="flex justify-between h-24 items-center">
                     <!-- Logo -->
-                    <div class="text-2xl font-bold text-gray-900">
-                        KASIRKU
+                    <div class="w-[200px] h-10 relative">
+                    <img src="{{ asset('Corousel kasir/logo.png') }}" 
+                        alt="2" 
+                        class="absolute w-full h-full object-cover object-center">
                     </div>
                     
                     <!-- Navigation -->
@@ -81,6 +83,11 @@
                             <a href="{{ route('admin.dashboard') }}" 
                                class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('admin.dashboard') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Dashboard
+                            </a>
+                            @endif
+                            @if (Auth::check() && Auth::user()->peran == 'user')
+                            <a href="{{ route('kasir.dashboard') }}" class="btn {{ request()->routeIs('kasir.dashboard') ? 'btn-primary' : 'btn-outline-primary'}}">
+                                Dashboard Kasir
                             </a>
                             @endif
                             <a href="{{ route('home') }}" 
@@ -93,14 +100,14 @@
                                 Pengguna
                             </a>
                             @endif
-                            @if (Auth::check() && (Auth::user()->peran == 'admin' || Auth::user()->peran == 'user'))
+                            @if (Auth::check() && Auth::user()->peran == 'admin')
                             <a href="{{ route('produk') }}"
-                            id="produkBtn"
-                            target="_blank"
-                            onclick="disabledButton(this)"
-                            class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('produk') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
-                            @if(session('produk_visited')) disabled @endif
-                            @if(request()->routeIs('produk')) disabled @endif>
+                               id="produkBtn"
+                               target="_blank"
+                               onclick="disabledButton(this)"
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('produk') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
+                               @if(session('produk_visited')) disabled @endif
+                               @if(request()->routeIs('produk')) disabled @endif>
                                 Produk
                             </a>
                             @endif
@@ -144,7 +151,7 @@
                         </div>
                         @endauth
                     </div>
-                </div>
+                </>
             </div>
         </nav>
 

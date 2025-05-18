@@ -32,30 +32,67 @@
         </div>
     </div>
 
-    <div class="card p-3 mt-3 shadow-sm">
-    <h4>Halo, {{ Auth::user()->name }} 👋</h4>
-    <p>Selamat datang di aplikasi kasir.</p>
-    </div>
+    <div class="p-6 bg-[#d2e7f6] rounded-lg mt-3 w-full flex flex-col items-center">
+    <h1 class="text-4xl font-bold mb-6 text-center">Halo, {{ Auth::user()->name }} 👋</h1>
 
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="card bg-success text-white p-3">
-                <h5>Pendapatan Hari Ini</h5>
-                <h3>Rp {{ number_format($jumlahPendapatanHariIni, 0, ',', '.') }}</h3>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+        <!-- Pendapatan Hari Ini -->
+        <div class="bg-green-600 text-white rounded-lg p-4 shadow w-full">
+            <h5 class="text-md mb-1">Pendapatan Hari Ini</h5>
+            <h3 class="text-6xl font-bold">Rp {{ number_format($jumlahPendapatanHariIni, 0, ',', '.') }}</h3>
         </div>
-        <div class="col-md-6">
-            <div class="card bg-info text-white p-3">
-                <h5>Jumlah Transaksi Hari Ini</h5>
-                <h3>{{ $jumlahTransaksiHariIni }}</h3>
-            </div>
+
+        <!-- Jumlah Transaksi Hari Ini -->
+        <div class="bg-blue-600 text-white rounded-lg p-4 shadow w-full">
+            <h5 class="text-md mb-1">Jumlah Transaksi Hari Ini</h5>
+            <h3 class="text-6xl font-bold">{{ $jumlahTransaksiHariIni }}</h3>
         </div>
     </div>
+</div>
 
+<div class="grid grid-cols-4 gap-4 mt-1 p-4">
+    <!-- Dashboard -->
+    @if (Auth::check() && Auth::user()->peran == 'admin')
+    <a href="{{ route('admin.dashboard') }}" class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all">
+        <div class="p-3 bg-blue-100 rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+        </div>
+        <span class="text-sm font-medium text-gray-700">Dashboard</span>
+    </a>
+    @endif
+    <!-- Transaksi Baru -->
+    <a href="{{ route('transaksi') }}" class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all">
+        <div class="p-3 bg-green-100 rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+        </div>
+        <span class="text-sm font-medium text-gray-700">Transaksi Baru</span>
+    </a>
 
-    <!-- Navigation Buttons -->
-    <button onclick="prevSlide()" class="absolute top-1/2 left-2 -translate-y-1/2 bg-white px-3 py-1 rounded-full shadow hover:bg-gray-200">&#8592;</button>
-    <button onclick="nextSlide()" class="absolute top-1/2 right-2 -translate-y-1/2 bg-white px-3 py-1 rounded-full shadow hover:bg-gray-200">&#8594;</button>
+    <!-- Kelola Produk -->
+    <a href="{{ route('produk') }}" class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all">
+        <div class="p-3 bg-purple-100 rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+        </div>
+        <span class="text-sm font-medium text-gray-700">Kelola Produk</span>
+    </a>
+
+    <!-- Laporan -->
+    <a href="{{ route('laporan') }}" class="flex flex-col items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all">
+        <div class="p-3 bg-yellow-100 rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+        </div>
+        <span class="text-sm font-medium text-gray-700">Laporan</span>
+    </a>
+</div>
+    
 
     <script>
         let currentIndex = 0;

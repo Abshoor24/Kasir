@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>KASIRKU</title>
+    <title>KasirKu</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -81,47 +81,40 @@
                         <div class="flex space-x-6">
                             @if (Auth::check() && Auth::user()->peran == 'admin')
                             <a href="{{ route('admin.dashboard') }}" 
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('admin.dashboard') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('admin.dashboard') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Dashboard
                             </a>
                             @endif
-                            @if (Auth::check() && Auth::user()->peran == 'user')
-                            <a href="{{ route('kasir.dashboard') }}" class="btn {{ request()->routeIs('kasir.dashboard') ? 'btn-primary' : 'btn-outline-primary'}}">
-                                Dashboard Kasir
-                            </a>
-                            @endif
                             <a href="{{ route('home') }}" 
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('home') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('home') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Beranda
                             </a>
                             @if (Auth::check() && Auth::user()->peran == 'admin')
                             <a href="{{ route('user') }}" 
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('user') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('user') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Pengguna
                             </a>
                             @endif
-                            @if (Auth::check() && Auth::user()->peran == 'admin')
                             <a href="{{ route('produk') }}"
                                id="produkBtn"
                                target="_blank"
                                onclick="disabledButton(this)"
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('produk') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('produk') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
                                @if(session('produk_visited')) disabled @endif
                                @if(request()->routeIs('produk')) disabled @endif>
                                 Produk
                             </a>
-                            @endif
                             <a href="{{ route('transaksi') }}"  
                                id="transaksiBtn"
                                target="_blank"
                                onclick="disabledButton(this)"
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('transaksi') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('transaksi') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} disabled:opacity-50 disabled:cursor-not-allowed"
                                @if(session('produk_visited')) disabled @endif
                                @if(request()->routeIs('transaksi')) disabled @endif>
                                 Transaksi
                             </a>
                             <a href="{{ route('laporan') }}" 
-                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('laporan') ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
+                               class="px-3 py-2 text-lg font-medium border-b-2 {{ request()->routeIs('laporan') ? 'border-blue-900 text-blue-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }}">
                                 Laporan
                             </a>
                         </div>
@@ -161,5 +154,45 @@
             </div>
         </main>
     </div>
+    <footer class="bg-gray-900 text-white py-10 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Tentang -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Aplikasi Kasir</h3>
+                <p class="text-sm text-gray-400">Solusi manajemen penjualan yang mudah, cepat, dan efisien untuk UMKM dan toko Anda.</p>
+            </div>
+
+            <!-- Navigasi -->
+            <div>
+                <h4 class="text-lg font-bold mb-4">Team</h4>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li class="font-semibold"><p>UI/UX</p></li>
+                    <li><p>Vanesha, Cantika Daniswara</p></li>
+                    <li class="font-semibold"><p>Fullstack Developer</p></li>
+                    <li><p>Muhammad Nurul Abshoor</p></li>
+                    <li class="font-semibold"><p>Assisten Developer</p></li>
+                    <li><p>Roofi Meynur</p></li>
+                </ul>
+            </div>
+
+            <!-- Sosial & Info -->
+            <div>
+                <h4 class="text-lg font-bold mb-4">Hubungi Kami</h4>
+                <ul class="text-sm text-gray-300 space-y-2">
+                    <li>Email: <a href="mailto:dev@kasirapp.com" class="hover:underline">dev@kasirapp.com</a></li>
+                    <li>Instagram: <a href="#" class="hover:underline">@kasir.app</a></li>
+                    <li>WhatsApp: <a href="#" class="hover:underline">+62 812-812-812</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
+            © {{ date('Y') }} Aplikasi Kasir. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+
 </body>
 </html>

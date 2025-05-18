@@ -19,10 +19,72 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+    .auth-card {
+        border-radius: 1rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: 0.3s ease-in-out;
+    }
+
+    .auth-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+        border-color: #86b7fe;
+    }
+
+    .btn-primary {
+        border-radius: 50px;
+        padding: 0.5rem 2rem;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+    }
+
+    .form-label {
+        font-weight: 500;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .auth-card {
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    }
+
+    .auth-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .vh-100 {
+        height: 100vh;
+    }
+
+
+    @keyframes fadeIn {
+        0% {opacity: 0; transform: translateY(10px);}
+        100% {opacity: 1; transform: translateY(0);}
+    }
+</style>
+
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        @php
+            $isAuthRoute = request()->routeIs('login') || request()->routeIs('register');
+        @endphp
+
+        @if (!$isAuthRoute)
+            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -75,6 +137,10 @@
                 </div>
             </div>
         </nav>
+
+
+        @endif
+        
 
         <main class="py-4">
             @yield('content')

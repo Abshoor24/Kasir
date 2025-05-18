@@ -50,15 +50,17 @@
     </style>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-[#d2e7f6]">
     <div id="app">
         <!-- Navbar -->
-        <nav class="bg-white shadow-sm">
+        <nav class="bg-[#d2e7f6]">
             <div class="max-w-7xl mx-auto px-10 sm:px-10 lg:px-8">
                 <div class="flex justify-between h-24 items-center">
                     <!-- Logo -->
-                    <div class="text-2xl font-bold text-gray-900">
-                        KASIRKU
+                    <div class="w-[200px] h-10 relative">
+                    <img src="{{ asset('Corousel kasir/logo.png') }}" 
+                        alt="2" 
+                        class="absolute w-full h-full object-cover object-center">
                     </div>
                     
                     <!-- Navigation -->
@@ -136,11 +138,12 @@
                         </div>
                         @endauth
                     </div>
-                </div>
+                </>
             </div>
         </nav>
 
-    <main class="py-5 bg-light" style="min-height: 100vh;">
+
+    <main class="py-5" style="min-height: 100vh;">
     <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="mb-4 fw-bold text-primary">Dashboard Admin</h1>
 

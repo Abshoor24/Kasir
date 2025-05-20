@@ -172,7 +172,10 @@
                     </div>
                     <div class="card-body">
                         <form wire:submit='imporExcel'>
-                            <input type="file" class="form-control" wire:model='fileExcel'>
+                            <input type="file" class="form-control" wire:model='fileExcel' accept=".xlsx, .xls">
+                            @error('fileExcel')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                             <br>
                             <button class="btn btn-secondary" type="submit"> Submit </button>
                         </form>

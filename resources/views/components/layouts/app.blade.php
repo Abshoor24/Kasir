@@ -168,7 +168,7 @@
                 <h4 class="text-lg font-bold mb-4">Team</h4>
                 <ul class="space-y-2 text-sm text-gray-300">
                     <li class="font-semibold"><p>UI/UX</p></li>
-                    <li><p>Vanesha, Cantika Daniswara</p></li>
+                    <li><p>Vanesha Maulidya P., Scherryl Cantika Daniswara</p></li>
                     <li class="font-semibold"><p>Fullstack Developer</p></li>
                     <li><p>Muhammad Nurul Abshoor</p></li>
                     <li class="font-semibold"><p>Assisten Developer</p></li>

@@ -56,7 +56,7 @@
                 @endif
 
                 <div class="text-center mt-3">
-                    <p>Belum punya akun?<a href="{{ route('login') }}" class="btn btn-link">Register</a></p>
+                    <p>Belum punya akun?<a href="{{ route('register') }}" class="btn btn-link">Register</a></p>
                 </div>
             </form>
         </div>

@@ -117,7 +117,8 @@ class User extends Component
     // }
 
     public function render()
-{
+{   
+    
     $currentUserId = auth()->user()->id;
     
     // Ambil user yang sedang login dan user yang dibuat olehnya

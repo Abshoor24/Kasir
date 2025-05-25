@@ -25,7 +25,7 @@ class Produk implements ToCollection, WithStartRow
                 $simpan->nama = $col[2];
                 $simpan->harga = $col[3];
                 $simpan->stok = 10;
-                $simpan->user_id = Auth::id(); // ✅ Tambahkan ini
+                $simpan->user_id = auth('web')->id(); // lebih eksplisit
                 $simpan->save();
             }
         }

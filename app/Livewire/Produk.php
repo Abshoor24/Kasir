@@ -2,12 +2,16 @@
 
 namespace App\Livewire;
 
+use id;
 use Livewire\Component;
-use App\Models\Produk as ModelProduk;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Produk as ModelProduk;
 use App\Imports\Produk as ImporProduk;
+use Illuminate\Validation\Rule;
+
+
 class Produk extends Component
 {
     use WithFileUploads, WithPagination;
@@ -116,7 +120,10 @@ class Produk extends Component
     public function simpan(){
         $this->validate([
             'nama' => 'required',
-            'kode' => ['required', 'unique:produks,kode'],
+            'kode' => ['required', 
+            'unique' => Rule::unique('produks')->where(function ($query) {
+                return $query->where('user_id', auth()->id());
+            })],
             'harga' => 'required',
             'stok' => 'required',
             
@@ -155,6 +162,12 @@ class Produk extends Component
     //     ]);
     // }
 
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+
     public function render()
 {
     $query = ModelProduk::query();
@@ -165,11 +178,14 @@ class Produk extends Component
     //     $query->where('user_id', auth()->id());
     // }
     
-    $semuaProduk = $query->where(function($query){
+    // $query = Produk::query(); // atau model yang kamu pakai
+    
+   $semuaProduk = $query->where('user_id', auth()->id())
+        ->where(function($query) {
             $query->where('nama', 'like', '%'. $this->search. '%')
-                ->orWhere('kode', 'like', '%'. $this->search. '%');
+                  ->orWhere('kode', 'like', '%'. $this->search. '%');
         })
-        ->paginate(10);
+        ->paginate(10); // paginate tanpa get()
 
     return view('livewire.produk', compact('semuaProduk'));
 }

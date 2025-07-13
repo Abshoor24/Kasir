@@ -37,4 +37,11 @@ Aplikasi manajemen penjualan dan produk kasir sederhana menggunakan Laravel seba
 ---
 
 ## 📂 Struktur Direktori
-
+kasir-app/
+├── backend/ # Laravel Project
+│ └── app/
+│ └── routes/
+│ └── database/
+├── frontend/ # React.js Project
+│ └── src/
+│ └── public/
